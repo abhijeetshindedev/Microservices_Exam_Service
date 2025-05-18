@@ -1,0 +1,48 @@
+package com.question.Controller;
+
+import com.question.Entity.Question;
+import com.question.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+
+@RestController
+@RequestMapping(value = "/que")
+public class QueController {
+
+    @Autowired
+    private QuestionService questionService;
+
+    @PostMapping(value = "/save")
+    public Question addQuestion(@RequestBody Question question) {
+        return questionService.addQuestion(question);
+    }
+
+    @PostMapping(value = "/update")
+    public Question updateQuestion(@RequestBody Question question) {
+        return questionService.updateQuestion(question);
+    }
+
+    @GetMapping(value = "/{questionId}")
+    public Question getQuestion(@PathVariable long questionId) {
+        return questionService.getQuestion(questionId);
+    }
+
+
+    @DeleteMapping(value = "/{questionId}")
+    public void deleteQuestion(@PathVariable long questionId) {
+        questionService.deleteQuestion(questionId);
+    }
+
+    @GetMapping(value = "/all")
+    public List<Question> getAllQuestions() {
+        return questionService.getAllQuestions();
+    }
+
+    @GetMapping(value = "/quiz/{quizId}")
+    public List<Question> findByQuizId(@PathVariable long quizId) {
+        return questionService.findByQuizId(quizId);
+    }
+}
